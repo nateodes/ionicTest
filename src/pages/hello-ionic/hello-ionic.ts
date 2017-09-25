@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
+import { NavController } from 'ionic-angular';
+import { App, ViewController } from 'ionic-angular';
+
+
 
 @Component({
   selector: 'page-hello-ionic',
@@ -10,9 +14,11 @@ export class HelloIonicPage {
 
   username: string = '';
 
-  constructor(private alertCtrl: AlertController) {
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public appCtrl: App, public viewCtrl: ViewController ) {
 
   }
+
+
 
   alert(title: string, message: string) {
     let alert = this.alertCtrl.create({
@@ -26,8 +32,8 @@ export class HelloIonicPage {
   loginUser() {
 
     if (/^[a-zA-z0-9]+$/.test(this.username)) {
-        //good username
-      
+       
+      this.navCtrl.push(ChatPage);
     }
     else {
       this.alert('Error', 'Invalid Username')

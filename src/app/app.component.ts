@@ -1,41 +1,33 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { Platform, MenuController, Nav } from 'ionic-angular';
-
-import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ListPage } from '../pages/list/list';
-import { ChatPage } from '../pages/chat/chat';
+import { Platform, MenuController } from 'ionic-angular';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { NavController } from 'ionic-angular';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  public rootPage: any = HelloIonicPage;
-  pages: Array<{title: string, component: any}>;
+  rootPage: string = 'HomePage';
+  
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen,
-    public navCtrl: NavController
+    public splashScreen: SplashScreen
   ) {
     this.initializeApp();
 
     // set our app's pages
-    this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage },
-      { title: 'Chat-App', component: ChatPage }
-    ];
+    // this.pages = [
+    //   { title: 'Hello Ionic', component: HomePage },
+    //   { title: 'My First List', component: ListPage },
+    //   { title: 'Chat-App', component: ChatPage }
+    // ];
   }
 
   initializeApp() {
@@ -51,6 +43,6 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+    // this.nav.setRoot(page.component);
   }
 }

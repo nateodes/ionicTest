@@ -78,9 +78,9 @@ export class HomePage {
       });
   }
 
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
+  // signInWithGoogle(): void {
+  //   this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  // }
  
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);

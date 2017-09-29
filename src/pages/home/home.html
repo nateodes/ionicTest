@@ -14,5 +14,28 @@
 
 
 <ion-content padding>
+    <div *ngIf="isLoggedIn; else facebookLogin">
+        <h2>Hi, {{users.name}} ({{users.email}})</h2>
+        <p>
+          Gender: {{users.gender}}
+        </p>
+        <p>
+          <img src="{{users.picture.data.url}}" width="100" alt="{{users.name}}" />
+        </p>
+        <p>
+          <button ion-button icon-right (click)="logout()">
+            Logout
+          </button>
+        </p>
+      </div>
+      <ng-template #facebookLogin>
+        <button ion-button icon-right (click)="signInWithFB()">
+          Login with
+          <ion-icon name="logo-facebook"></ion-icon>
+        </button>
+      </ng-template>
+
   <button ion-button (click)="goToChatPage()"> Go To Chat Page </button>
+
+
 </ion-content>

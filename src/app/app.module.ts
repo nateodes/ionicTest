@@ -11,10 +11,10 @@ import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider } from "angular4-social-login";
 
 let config = new AuthServiceConfig([
-  // {
-  //   id: GoogleLoginProvider.PROVIDER_ID,
-  //   provider: new GoogleLoginProvider("Google-OAuth-Client-Id")
-  // },
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("657599007129-uljjjisbqd9svbp5umrl79if6tq8slr0.apps.googleusercontent.com")
+  },
   {
     id: FacebookLoginProvider.PROVIDER_ID,
     provider: new FacebookLoginProvider("1914612642121999")

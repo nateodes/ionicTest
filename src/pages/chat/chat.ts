@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Facebook } from '@ionic-native/facebook';
 
-/**
- * Generated class for the ChatPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,11 +10,41 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ChatPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  isLoggedIn:boolean = false;
+  users: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fb: Facebook) {
+   
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(userid) {
     console.log('ionViewDidLoad ChatPage');
+    this.fb.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
+    .then(res => {
+      console.log(res);
+      this.users = res;
+    })
+    .catch(e => {
+      console.log(e);
+    });
   }
+
+  // getUserDetail(userid) {
+  //   this.fb.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
+  //     .then(res => {
+  //       console.log(res);
+  //       this.users = res;
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // }
+
+  logout() {
+    this.fb.logout()
+      .then( res => this.isLoggedIn = false)
+      .catch(e => console.log('Error logout from Facebook', e));
+  }
+
 
 }

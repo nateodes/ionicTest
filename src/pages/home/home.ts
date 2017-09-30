@@ -2,15 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 
-import { FacebookLoginProvider } from "angular4-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angular4-social-login";
 import { AuthService } from "angular4-social-login";
 import { SocialUser } from "angular4-social-login";
-/**
- * Generated class for the HomePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -26,7 +20,6 @@ export class HomePage {
   private loggedIn: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private fb: Facebook, private authService: AuthService) {
-   
   }
 
   ionViewDidLoad() {
@@ -41,6 +34,7 @@ export class HomePage {
       }
     })
     .catch(e => console.log(e));
+    
   }
 
   goToChatPage() {
@@ -61,12 +55,6 @@ export class HomePage {
       .catch(e => console.log('Error logging into Facebook', e));
   }
 
-  logout() {
-    this.fb.logout()
-      .then( res => this.isLoggedIn = false)
-      .catch(e => console.log('Error logout from Facebook', e));
-  }
-
   getUserDetail(userid) {
     this.fb.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
       .then(res => {
@@ -78,9 +66,11 @@ export class HomePage {
       });
   }
 
-  // signInWithGoogle(): void {
-  //   this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  // }
+  
+
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
  
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
@@ -96,4 +86,6 @@ export class HomePage {
       this.loggedIn = (user != null);
     });
   }
+
+
 }

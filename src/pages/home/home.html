@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="twitter">
     <ion-title>home</ion-title>
   </ion-navbar>
 
@@ -15,8 +15,23 @@
 
 <ion-content padding>
   
-     
-        <button ion-button icon-right (click)="signInWithFB()">
+  <ion-list> 
+    <label ion-label floating> Name: </label>
+    <br>
+    <input><input>
+    <br> 
+    <label ion-label floating> Password: </label>
+    <br> 
+    <input> <input>
+    <br>
+    <button ion-button round color="danger">Delete</button>
+    <button ion-button round color="twitter">Submit</button>
+    
+    <ion-checkbox color="twitter">Checkbox</ion-checkbox>
+
+     </ion-list>
+
+        <button ion-button icon-right round (click)="signInWithFB()">
           Login with
           <ion-icon name="logo-facebook"></ion-icon>
         </button>
@@ -27,11 +42,23 @@
             Login with
             <ion-icon name="logo-google"></ion-icon>
           </button>
-       
+
+             
 
         <span _ngcontent-c2="" class="fa fa-google"></span>
 
   <button ion-button (click)="goToChatPage()"> Go To Chat Page </button>
 
-
+ 
 </ion-content>
+
+
+<ion-footer color="twitter">
+    <ion-toolbar color="twitter">
+      <ion-title>Footer</ion-title>
+      <ion-item color="twitter">
+          <ion-label>Travel Dates</ion-label>
+          <ion-datetime color="primary" displayFormat="MMM/D/YY" min="2017" max="2020-10-31" [(ngModel)]="myDate"></ion-datetime>
+        </ion-item>
+    </ion-toolbar>
+  </ion-footer>

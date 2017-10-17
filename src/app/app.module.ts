@@ -9,6 +9,10 @@ import { Facebook } from '@ionic-native/facebook';
 
 import { SocialLoginModule, AuthServiceConfig } from "angular4-social-login";
 import { GoogleLoginProvider, FacebookLoginProvider } from "angular4-social-login";
+import { ReviewsProvider } from '../providers/reviews/reviews';
+
+import { AddReviewPage } from '../pages/add-review/add-review';
+import { HttpModule } from '@angular/http'; 
 
 let config = new AuthServiceConfig([
   {
@@ -29,7 +33,8 @@ let config = new AuthServiceConfig([
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    SocialLoginModule.initialize(config),    
+    SocialLoginModule.initialize(config),
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +44,8 @@ let config = new AuthServiceConfig([
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Facebook
+    Facebook,
+    ReviewsProvider
   ]
 })
 export class AppModule {}

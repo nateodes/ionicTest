@@ -1,91 +1,55 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Facebook } from '@ionic-native/facebook';
-
-import { FacebookLoginProvider, GoogleLoginProvider } from "angular4-social-login";
-import { AuthService } from "angular4-social-login";
-import { SocialUser } from "angular4-social-login";
-
-@IonicPage()
+import { Component } from "@angular/core";
+import { NavController, ModalController } from 'ionic-angular';
+import { AddReviewPage } from '../add-review/add-review';
+import { ReviewsProvider } from '../../providers/reviews/reviews';
+ 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
+  selector: 'home-page',
+  templateUrl: 'home.html'
 })
 export class HomePage {
-
-  isLoggedIn:boolean = false;
-  users: any;
-
-  private user: SocialUser;
-  private loggedIn: boolean;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private fb: Facebook, private authService: AuthService) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
-    this.fb.getLoginStatus()
-    .then(res => {
-      console.log(res.status);
-      if(res.status === "connect") {
-        this.isLoggedIn = true;
-      } else {
-        this.isLoggedIn = false;
-      }
-    })
-    .catch(e => console.log(e));
-    
-  }
-
-  goToChatPage() {
-    this.navCtrl.push("ChatPage");
-  }
-
-  login() {
-    this.fb.login(['public_profile', 'user_friends', 'email'])
-      .then(res => {
-        if(res.status === "connected") {
-          console.log('connected to FB');
-          this.isLoggedIn = true;
-          this.getUserDetail(res.authResponse.userID);
-        } else {
-          this.isLoggedIn = false;
-        }
-      })
-      .catch(e => console.log('Error logging into Facebook', e));
-  }
-
-  getUserDetail(userid) {
-    this.fb.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
-      .then(res => {
-        console.log(res);
-        this.users = res;
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
-  
-
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+ 
+  reviews: any;
+ 
+  constructor(public nav: NavController, public reviewService: ReviewsProvider, public modalCtrl: ModalController) {
+ 
   }
  
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
+  ionViewDidLoad(){
  
-  signOut(): void {
-    this.authService.signOut();
-  }
-
-  ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
+    this.reviewService.getReviews().then((data) => {
+      console.log(data);
+      this.reviews = data;
     });
+ 
   }
-
-
+ 
+  addReview(){
+ 
+    let modal = this.modalCtrl.create(AddReviewPage);
+ 
+    modal.onDidDismiss(review => {
+      if(review){
+        this.reviews.push(review);
+        this.reviewService.createReview(review);       
+      }
+    });
+ 
+    modal.present();
+ 
+  }
+ 
+  deleteReview(review){
+ 
+    //Remove locally
+      let index = this.reviews.indexOf(review);
+ 
+      if(index > -1){
+        this.reviews.splice(index, 1);
+      }  
+ 
+    //Remove from database
+    this.reviewService.deleteReview(review._id);
+  }
+ 
 }
